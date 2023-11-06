@@ -4,12 +4,13 @@ series of platforms.
 
 Phase 1:
 - [ ] Create a basic sprite for the character scaling the building
-- [ ] Add gravity to the player so when they fall if they are not jumping or actively standing on a platform
+- [ ] Create a basic sky and grass for the background of the game
 - [ ] Make it so the arrow keys control which direction the player moves horizontally
 Phase 1:
 - [ ] Create platforms of various heights and sizes for the player to scale
 - [ ] Make it so when the space bar is pressed, the player jumps to a certain height
 - [ ] Create a system that detects whether or not the player is standing on solid ground
+- [ ] Add gravity to the player so when they fall if they are not jumping or actively standing on a platform
 Phase 1:
 - [ ] Make it so when the player reaches a certain height (the top of the building) they win the game
 - [ ] Make it so if the player misses a platform and falls, the game ends
