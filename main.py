@@ -15,7 +15,6 @@ class World:
     platforms: list[DesignerObject]
     timer: int
 
-
 def create_sky() -> DesignerObject:
     """ Create the sky """
     sky = rectangle("#9cedff", 10000, 10000)
