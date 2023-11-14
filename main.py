@@ -3,7 +3,7 @@ from designer import *
 from random import randint
 
 # Set speed of the copter
-COW_SPEED = 15
+COW_SPEED = 25
 APPLE_FALLING_SPEED = 10
 
 
@@ -26,20 +26,20 @@ def create_sky() -> DesignerObject:
     return sky
 
 
-def create_cow() -> DesignerObject:
-    """ Create the cow """
-    cow = emoji("cow")
-    cow.y = 400
-    cow.flip_x = True
-    return cow
-
-
 def create_grass() -> DesignerObject:
     """ Create the grass """
     grass = rectangle("green", 2000, 200)
     grass.y = 515
     grass.flip_x = True
     return grass
+
+
+def create_cow() -> DesignerObject:
+    """ Create the cow """
+    cow = emoji("cow")
+    cow.y = 400
+    cow.flip_x = True
+    return cow
 
 
 def create_world() -> World:
@@ -80,8 +80,8 @@ def flip_cow(world: World, key: str):
 def create_apple() -> DesignerObject:
     """ Create a small apple randomly on the top of the screen """
     apple = emoji('🍎')
-    apple.scale_x = 3
-    apple.scale_y = 4
+    apple.scale_x = 1
+    apple.scale_y = 1
     apple.anchor = 'midtop'
     apple.x = randint(0, get_width())
     apple.y = 0
@@ -97,15 +97,17 @@ def create_new_apple(world: World):
 
 def cow_eats_apples(world: World):
     eaten_apples = []
-    destroyed_drops = []
+    destroyed_apples = []
     for apple in world.apples:
         if colliding(apple, world.cow):
             world.cow.scale_x += 1
             world.cow.scale_y += 1
             eaten_apples.append(apple)
-            destroyed_drops.append(apple)
+            destroyed_apples.append(apple)
+            world.cow.y -= 15
     for apple in eaten_apples:
         world.apples.remove(apple)
+        destroy(apple)
 
 
 def apples_falling(world: World):
