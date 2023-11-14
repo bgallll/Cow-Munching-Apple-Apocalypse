@@ -4,12 +4,16 @@ fall from the sky. The objective of the game will
 be to see how quickly the player can reach a
 certain size cow.
 
+Phase 1 Video Link: https://youtu.be/qzbCK0YJaQM
+
+
+
 Phase 1:
-- [X] Create a basic sprite for the character scaling the building
+- [X] Create a basic sprite for the cow
 - [X] Create a basic sky and grass for the background of the game
 - [X] Make it so the arrow keys control which direction the player moves horizontally
 Phase 2:
-- [ ] Create the objects of the various fruits
+- [X] Create the objects of the fruits
 - [ ] Make it so when the fruit appear, they fall accordingly
 - [ ] Create a system that detects whether or not the cow comes into contact with the fruit
 - [ ] Destroy the fruit when it leaves the screen
