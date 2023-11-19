@@ -90,7 +90,7 @@ def create_apple() -> DesignerObject:
 
 def create_new_apple(world: World):
     """ Create a new apple randomly"""
-    if len(world.apples) < 10 and randint(1, 100) == 50:
+    if len(world.apples) < 10 and randint(1, 50) == 25:
         new_apple = create_apple()
         world.apples.append(new_apple)
 
