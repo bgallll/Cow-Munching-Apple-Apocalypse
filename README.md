@@ -25,3 +25,4 @@ Phase 2 Video Link: https://youtu.be/Y0koLSgPFqA
 - [X] Create a timer that tracks the time it takes the player to end the game
 - [X] Create a size capacity for the cow that will end the game and result in the player winning
 - [X] Display the player's final time when they win
+- [X] Make it so if the player misses more than a certain number of apples, they lose

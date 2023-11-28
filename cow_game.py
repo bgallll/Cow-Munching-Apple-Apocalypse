@@ -3,7 +3,6 @@ from designer import *
 from random import randint
 import time
 
-
 @dataclass
 class World:
     sky: DesignerObject
@@ -15,7 +14,6 @@ class World:
     end_text: DesignerObject
     APPLE_FALLING_SPEED: int
     start_time: time
-
 
 def create_sky() -> DesignerObject:
     """ Create the sky """
@@ -43,7 +41,7 @@ def create_cow() -> DesignerObject:
 
 def create_world() -> World:
     """ Create the world """
-    return World(create_sky(), create_cow(), create_grass(), [], 25, [], text("black", "0", 50, get_width() / 2, 40),
+    return World(create_sky(), create_cow(), create_grass(), [], 25, [], text("black", "0", 35, get_width() / 2, 40),
                  10, time.time())
 
 
@@ -62,7 +60,7 @@ def head_right(world: World):
 
 
 def bounce_cow(world: World):
-    """ Handle the cow bouncing off a wall """
+    """ Handle the player trying to go offscreen"""
     if world.cow.x > get_width():
         head_left(world)
     elif world.cow.x < 0:
@@ -96,6 +94,8 @@ def create_new_apple(world: World):
 
 
 def cow_eats_apples(world: World):
+    """makes it so when the cow comes into contact with the apples, the apples get eaten and
+    disappear and the cow grows larger"""
     eaten_apples = []
     destroyed_apples = []
     for apple in world.apples:
@@ -131,16 +131,31 @@ def update_timer(world):
 def game_over_win(world):
     """end the game when the cow eats enough apples and gets big enough"""
     end_time = time.time()
-    world.end_text.text = "Game Over! Your time was " + str((end_time - world.start_time) // 1)
+    world.end_text.text = "You Win! Your time was " + str((end_time - world.start_time) // 1)
+
+
+def missed_too_many_apples(world: World):
+    """the player loses if they miss too many apples"""
+    apples_missed = 0
+    for apple in world.apples:
+        if apple.y > 500:
+            apples_missed += 1
+    return apples_missed > 10
+
+
+def game_over_lose(world):
+    """end the game when the player misses too many apples"""
+    end_time = time.time()
+    world.end_text.text = "Game Over! You missed too many apples!"
 
 
 when("updating", apples_falling)
 when("updating", update_timer)
 when("updating", create_new_apple)
 when(cow_is_big, game_over_win, pause)
+when(missed_too_many_apples, game_over_lose, pause)
 when("updating", cow_eats_apples)
 when("typing", flip_cow)
 when('starting', create_world)
 when("updating", bounce_cow)
 start()
-
