@@ -22,7 +22,6 @@ Phase 2 Video Link: https://youtu.be/Y0koLSgPFqA
 
 
 **Phase 3:**
-- [ ] Destroy the fruit when it leaves the screen
-- [ ] Create a timer that tracks the time it takes the player to end the game
-- [ ] Create a size capacity for the cow that will end the game and result in the player winning
-- [ ] Display the player's final score when they win
+- [X] Create a timer that tracks the time it takes the player to end the game
+- [X] Create a size capacity for the cow that will end the game and result in the player winning
+- [X] Display the player's final time when they win

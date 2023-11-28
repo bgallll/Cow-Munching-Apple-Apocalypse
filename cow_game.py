@@ -1,10 +1,7 @@
 from dataclasses import dataclass
 from designer import *
 from random import randint
-
-# Set speed of the copter
-COW_SPEED = 25
-APPLE_FALLING_SPEED = 10
+import time
 
 
 @dataclass
@@ -15,7 +12,9 @@ class World:
     apples: list[DesignerObject]
     cow_speed: int
     platforms: list[DesignerObject]
-    timer: int
+    end_text: DesignerObject
+    APPLE_FALLING_SPEED: int
+    start_time: time
 
 
 def create_sky() -> DesignerObject:
@@ -44,21 +43,22 @@ def create_cow() -> DesignerObject:
 
 def create_world() -> World:
     """ Create the world """
-    return World(create_sky(), create_cow(), create_grass(), [], COW_SPEED, 0, [])
+    return World(create_sky(), create_cow(), create_grass(), [], 25, [], text("black", "0", 50, get_width() / 2, 40),
+                 10, time.time())
 
 
 def head_left(world: World):
     """ Make the cow start moving left """
-    world.cow_speed = -COW_SPEED
+    world.cow_speed = abs(world.cow_speed)
     world.cow.flip_x = False
-    world.cow.x += (world.cow_speed)
+    world.cow.x -= world.cow_speed
 
 
 def head_right(world: World):
     """ Make the cow start moving right """
-    world.cow_speed = COW_SPEED
+    world.cow_speed = abs(world.cow_speed)
     world.cow.flip_x = True
-    world.cow.x += COW_SPEED
+    world.cow.x += world.cow_speed
 
 
 def bounce_cow(world: World):
@@ -90,7 +90,7 @@ def create_apple() -> DesignerObject:
 
 def create_new_apple(world: World):
     """ Create a new apple randomly"""
-    if len(world.apples) < 10 and randint(1, 50) == 25:
+    if len(world.apples) < 30 and randint(1, 50) == 25:
         new_apple = create_apple()
         world.apples.append(new_apple)
 
@@ -113,13 +113,34 @@ def cow_eats_apples(world: World):
 def apples_falling(world: World):
     """ Make the apples fall """
     for falling_apple in world.apples:
-        falling_apple.y += APPLE_FALLING_SPEED
+        falling_apple.y += world.APPLE_FALLING_SPEED
+
+
+def cow_is_big(world: World) -> bool:
+    """ detects when the cow reaches the right size """
+    return world.cow.scale_x >= 10
+
+
+def update_timer(world):
+    """ Update the timer """
+    end_time = time.time()
+    elapsed_time = (end_time - world.start_time) // 1
+    world.end_text.text = "time passed: " + str(elapsed_time)
+
+
+def game_over_win(world):
+    """end the game when the cow eats enough apples and gets big enough"""
+    end_time = time.time()
+    world.end_text.text = "Game Over! Your time was " + str((end_time - world.start_time) // 1)
 
 
 when("updating", apples_falling)
+when("updating", update_timer)
 when("updating", create_new_apple)
+when(cow_is_big, game_over_win, pause)
 when("updating", cow_eats_apples)
 when("typing", flip_cow)
 when('starting', create_world)
 when("updating", bounce_cow)
 start()
+
