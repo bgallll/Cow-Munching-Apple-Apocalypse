@@ -3,6 +3,7 @@ from designer import *
 from random import randint
 import time
 
+
 @dataclass
 class World:
     sky: DesignerObject
@@ -14,6 +15,7 @@ class World:
     end_text: DesignerObject
     APPLE_FALLING_SPEED: int
     start_time: time
+
 
 def create_sky() -> DesignerObject:
     """ Create the sky """
@@ -60,7 +62,7 @@ def head_right(world: World):
 
 
 def bounce_cow(world: World):
-    """ Handle the player trying to go offscreen"""
+    """ Handle the cow bouncing off a wall """
     if world.cow.x > get_width():
         head_left(world)
     elif world.cow.x < 0:
@@ -94,8 +96,6 @@ def create_new_apple(world: World):
 
 
 def cow_eats_apples(world: World):
-    """makes it so when the cow comes into contact with the apples, the apples get eaten and
-    disappear and the cow grows larger"""
     eaten_apples = []
     destroyed_apples = []
     for apple in world.apples:
@@ -144,7 +144,7 @@ def missed_too_many_apples(world: World):
 
 
 def game_over_lose(world):
-    """end the game when the player misses too many apples"""
+    """end the game when the cow eats enough apples and gets big enough"""
     end_time = time.time()
     world.end_text.text = "Game Over! You missed too many apples!"
 
@@ -159,3 +159,4 @@ when("typing", flip_cow)
 when('starting', create_world)
 when("updating", bounce_cow)
 start()
+
